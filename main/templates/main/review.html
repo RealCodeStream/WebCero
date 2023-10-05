@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!-- ================================
+Start SEO blocks
+================================= -->
+{% block title %}{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+<!-- ================================
+END SEO blocks
+================================= -->
+
+<!-- ================================
+Start CSS blocks
+================================= -->
+{% block extend_header %}{% endblock %}
+<!-- ================================
+END CSS blocks
+================================= -->
+
+<!-- ================================
+Start script blocks
+================================= -->
+{% block extend_footer %}{% endblock %}
+<!-- ================================
+END script blocks
+================================= -->
+
+<!-- ================================
+Start Content
+================================= -->
+{% block content %}
+<body  style="background-color: rgb(170, 0, 0, 0.5)">
+<section>
+    <div class="innerPageBannerCol">
+      <div class="container"><!--centra el titulo -->
+        <div class="row g-4 g-md-3  align-items-center">
+          <div class="col-md-6"><!--le da un salto de linea al titulo si es largo -->
+            <div class="bannerContent">
+                <!--style="color: green; -->
+              <h1 class="xlTitle pb-md-3" style="font-size: 78px; font-family: Lovelyn;" >Otra secccion</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ver como incorporar esto -->
+<!-- ================================
+End Content
+================================= -->
+{%endblock%}

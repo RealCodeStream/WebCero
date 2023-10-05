@@ -1,0 +1,32 @@
+
+<html>
+<head></head>
+<body>
+
+<div class="container-from">
+
+        
+         <h3 class="txt_gris_medio">Acceder</h3>
+         <hr>
+            <div class="login-container">
+                 {% if from.errors %}
+                  <div class="alert alert-danger"><p>Tu usuario y contraseña no coinciden. Por favor intenta otra vez.</p></div>
+                 {% endif %}
+                        <form id="from-login" method="post" action="">
+                            {% csrf_token %}
+
+                                <div class="w450" id="username"><input type="text" name="username" placeholder="Usuario">
+                                </div >
+                                <div class="w450" id="password"><input type="password" name="password" placeholder="Contraseña">  
+                                </div >
+
+                                <button id="btn-registrar" class="buttin_large">login</button>
+                                <div class="clearfix">
+                                </div>    
+                        </form>
+                        <a href="#" class="txt_verde txt_center mt15 mb20" style="display: block">Aviso de Privacidad</a>
+    </div>
+</div>
+
+</body>
+</html>
