@@ -1,54 +1,25 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-<!-- ================================
-Start SEO blocks
-================================= -->
-{% block title %}{% endblock %}
-{% block decription %}{% endblock %}
-{% block keywords %}{% endblock %}
-<!-- ================================
-END SEO blocks
-================================= -->
-
-<!-- ================================
-Start CSS blocks
-================================= -->
-{% block extend_header %}{% endblock %}
-<!-- ================================
-END CSS blocks
-================================= -->
-
-<!-- ================================
-Start script blocks
-================================= -->
-{% block extend_footer %}{% endblock %}
-<!-- ================================
-END script blocks
-================================= -->
-
-<!-- ================================
-Start Content
-================================= -->
 {% block content %}
-<body  style="background-color: rgb(170, 0, 0, 0.5)">
-<section>
-    <div class="innerPageBannerCol">
-      <div class="container"><!--centra el titulo -->
-        <div class="row g-4 g-md-3  align-items-center">
-          <div class="col-md-6"><!--le da un salto de linea al titulo si es largo -->
-            <div class="bannerContent">
-                <!--style="color: green; -->
-              <h1 class="xlTitle pb-md-3" style="font-size: 78px; font-family: Lovelyn;" >Otra secccion</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="container">
+    <h1>Categorías</h1>
+    
+    <!-- Formulario para crear una nueva categoría -->
+    <form method="post" action="{% url 'main:crear_categoria' %}">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea>
+        <button type="submit">Crear Categoría</button>
+    </form>
 
-<!-- ver como incorporar esto -->
-<!-- ================================
-End Content
-================================= -->
-{%endblock%}
+    <!-- Lista de categorías existentes -->
+    <ul>
+        {% for categoria in categorias %}
+            <li>{{ categoria.nombre }} - {{ categoria.descripcion }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
