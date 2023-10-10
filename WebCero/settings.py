@@ -121,8 +121,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'media')
+    os.path.join(BASE_DIR, 'static')#,
+    #os.path.join(BASE_DIR, 'media')
 ]
 
 STATIC_URL = "/static/"
@@ -134,3 +134,12 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Tamaño máximo para las imágenes
+MAX_IMAGE_WIDTH = 240
+MAX_IMAGE_HEIGHT = 240
+
+# Configuración de Media
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
