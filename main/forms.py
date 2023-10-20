@@ -1,8 +1,6 @@
 from django import forms
 from .models import Category, Product, Review
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib import messages
+
 
 
 #Formulario de categorias
@@ -26,8 +24,3 @@ class ReviewForm(forms.Form):
     rating = forms.ChoiceField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')], label='Calificación')
     comment = forms.CharField(widget=forms.Textarea, label='Comentario')
 
-class CustomUserCreationForm(UserCreationForm):
-    
-    class Meta:
-        model= User
-        fields= ["username","email","password1","password2"]
