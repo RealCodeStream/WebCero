@@ -19,10 +19,22 @@ Start Navigation Bar
             <div class="navCollapseCol">
             <div class="navCol">
                 <ul style="font-family: 'Chivo Mono', monospace;">
-                <li ><a href="{%url 'main:home'%}">Home</a></li>
-                <li><a href="{%url 'main:category_list'%}">Categoria</a></li>
-                <li><a href="{%url 'main:product_list'%}">Productos</a></li>
-                </ul>
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{%url 'main:home'%}">Home</a></li>
+                    <li><a href="{%url 'main:category_list'%}">Categoria</a></li>
+                    <li><a href="{%url 'main:product_list'%}">Productos</a></li>
+                    <li>
+                      <form action="{% url 'main:logout'%}" method="post">
+                        {% csrf_token %}
+                        <input class="btn"  type="submit" value="Cerrar Sesion" />
+                      </form>
+                    </li>
+                    {% else %}
+                    <li>
+                      <a href="{% url 'login' %}" class="btn"  >Iniciar Sesion</a>
+                    </li>
+                    {% endif %}
+                  </ul>
             </div>
             </div>
         </div>
