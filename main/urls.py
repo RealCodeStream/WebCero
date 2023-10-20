@@ -6,7 +6,7 @@ app_name = "main"
 
 urlpatterns = [
 	path('', views.index, name='home'),
-
+    path('logout/',views.logout, name='logout'),
 
         # Rutas para categorías
     path('categories/', views.category_list, name='category_list'),
@@ -21,5 +21,6 @@ urlpatterns = [
     path('products/<int:product_id>/delete/', views.delete_product, name='delete_product'),
 	# Rutas para review
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
-    path('product/<int:product_id>/add_review/', views.add_review, name='add_review')
+    path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
+    path('registro/',views.registro, name='registro'),
     ]
