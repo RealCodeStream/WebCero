@@ -2,10 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Category, Product, Review
-from .forms import CategoryForm, ProductForm, CommentForm, ReviewForm
+from .forms import CustomUserCreationForm,CategoryForm, ProductForm, CommentForm, ReviewForm
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 
 
+def logout(request):
+    request.session.flush()
+    return redirect('login')
 
 #@login_required
 def index(request):
@@ -173,3 +178,19 @@ def add_review(request, product_id):
         return redirect('main:product_detail', product_id=product_id)
     
     return redirect('main:product_detail', product_id=product_id)
+
+
+def registro(request):
+		form = CustomUserCreationForm()
+		if request.method == 'POST':
+			form = CustomUserCreationForm(request.POST)
+			if form.is_valid():
+				form.save()
+				user = form.cleaned_data.get('username')
+				messages.success(request, 'Felicidades cuenta creada ' + user)
+
+				return redirect('login')
+			
+
+		context = {'form':form}
+		return render(request, 'registration/registro.html', context)
