@@ -1,16 +1,37 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Category, Product, Review
-from .forms import CustomUserCreationForm,CategoryForm, ProductForm, CommentForm, ReviewForm
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
+from .forms import CategoryForm, ProductForm,CustomUserCreationForm, CommentForm, ReviewForm
 
 
 
-def logout(request):
-    request.session.flush()
-    return redirect('login')
+
+
+# Vista para crear una nueva cuenta o registrarse
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('main:home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('main:home')  
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'registration/login.html', {'form': form})
 
 #@login_required
 def index(request):
@@ -38,23 +59,24 @@ def create_category(request):
 # Vista para editar una categoría existente
 def edit_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
+    
     if request.method == 'POST':
         if 'delete' in request.POST:
             # Lógica para eliminar la categoría
             category.delete()
             return redirect('main:category_list')
         elif 'cancel' in request.POST:
-            # Redirige a la lista de productos en caso de cancelación
+            # Redirige a la lista de categorías en caso de cancelación
             return redirect('main:category_list')
         elif 'save' in request.POST:
             # Lógica para guardar la categoría
-            form = CategoryForm(request.POST)
+            form = CategoryForm(request.POST, instance=category)
             if form.is_valid():
                 form.save()
                 return redirect('main:category_list')
     else:
         form = CategoryForm(instance=category)
-    
+        
     return render(request, 'main/edit_category.html', {'form': form, 'category': category})
 
 # Vista para eliminar una categoría
@@ -167,30 +189,24 @@ def product_detail(request, product_id):
     })
 
 # Vista para agregar una review
+@login_required
 def add_review(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
 
     if request.method == 'POST':
-        comment = request.POST['comment']
-        rating = request.POST['rating']
-        review = Review.objects.create(product=product , comment=comment, rating=rating)
-        review.save()
-        return redirect('main:product_detail', product_id=product_id)
-    
-    return redirect('main:product_detail', product_id=product_id)
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            comment = form.cleaned_data['comment']
+            rating = form.cleaned_data['rating']
 
+            # Obtén el nombre de usuario del usuario actual
+            user_name = request.user.username
 
-def registro(request):
-		form = CustomUserCreationForm()
-		if request.method == 'POST':
-			form = CustomUserCreationForm(request.POST)
-			if form.is_valid():
-				form.save()
-				user = form.cleaned_data.get('username')
-				messages.success(request, 'Felicidades cuenta creada ' + user)
+            # Crea la revisión y asigna el nombre de usuario
+            review = Review.objects.create(product=product, user=request.user, comment=comment, rating=rating)
 
-				return redirect('login')
-			
+            return redirect('main:product_detail', product_id=product_id)
+    else:
+        form = ReviewForm()
 
-		context = {'form':form}
-		return render(request, 'registration/registro.html', context)
+    return render(request, 'main/add_review.html', {'product': product, 'form': form})

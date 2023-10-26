@@ -16,25 +16,25 @@ Start CSS blocks
 ================================= -->
 {% block extend_header %}
 <style>
-/* Estilo para la lista de categorías */
-ul.category-list {
+  /* Estilo para la lista de categorías */
+  ul.category-list {
     list-style: none;
     padding: 0;
-}
+  }
 
-ul.category-list li {
+  ul.category-list li {
     margin-bottom: 10px;
     font-size: 18px; /* Tamaño de fuente deseado */
-}
+  }
 
-ul.category-list li a {
+  ul.category-list li a {
     text-decoration: none;
     color: #0000A0; /* Cambia este valor al color deseado */
-}
+  }
 
-ul.category-list li a:hover {
+  ul.category-list li a:hover {
     text-decoration: underline; /* Subrayar al pasar el mouse */
-}
+  }
 </style>
 {% endblock %}
 <!-- ================================
@@ -53,32 +53,35 @@ END script blocks
 Start Content
 ================================= -->
 {% block content %}
-<body  style="background-color: rgb(135, 206, 235, 0.5)">
+  <body>
     <section>
-    <div class="innerPageBannerCol">
-        <div class="container"><!--centra el titulo -->
-        <div class="row g-4 g-md-3  align-items-center">
-            <div class="col-md-8"><!--le da un salto de linea al titulo si es largo -->
-            <div class="bannerContent">
-                <!--style="color: green; -->
-                <h1 class="xlTitle pb-md-3" style="font-size: 78px; font-family: Lovelyn;" >Categorías</h1>
+      <div class="innerPageBannerCol">
+        <div class="container">
+          <!-- Centra el título -->
+          <div class="row g-4 g-md-3 align-items-center">
+            <div class="col-md-8">
+              <!-- Le da un salto de línea al título si es largo -->
+              <div class="bannerContent">
+                <h1 class="xlTitle pb-md-3" style="font-size: 78px; font-family: Lovelyn;">Categorías</h1>
                 <ul class="category-list">
-                {% for category in categories %}
+                  {% for category in categories %}
                     <li><a href="{% url 'main:edit_category' category.id %}">{{ category.name }}</a> - 
-                        {{ category.description|truncatechars:40 }} <!-- Tamano de la descripcion -->
+                      {{ category.description|truncatechars:40 }} <!-- Tamaño de la descripción -->
                     </li>
-                {% endfor %}
+                  {% endfor %}
                 </ul>
-            <a href="{% url 'main:create_category' %}">Crear Nueva Categoría</a>
+                <a href="{% url 'main:create_category' %}" class="btn btn-primary position-fixed bottom-0 end-0 m-3">Crear Nueva Categoría</a>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </section>
+  </body>
+  <!-- Ver cómo incorporar esto -->
+  <!-- ================================
+  End Content
+  ================================== -->
+{% endblock %}
 
-<!-- ver como incorporar esto -->
-<!-- ================================
-End Content
-================================= -->
-{%endblock%}
+

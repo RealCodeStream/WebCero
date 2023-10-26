@@ -1,99 +1,42 @@
-{%load static%}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UFT-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA--Compatible" content= "ie=edge">
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.css">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <title>Ingreso al sistema</title>
-    </head>
-    <body>
-        <div class =" container h-100">
-            <br>
-            <br>
-            <br>
-            <div class="d-flex justify-content-center h-100">
-                    <div class=" card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-center">
-                            <h2 id="form-title">Ingresa tus credenciales</h2>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-center form_container">
-                            <form  method="post" action="">
-                                {% csrf_token %}
-                                <div class="input-group mb-3">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-user">Usuario:</i></span>
-                                    </div>
-            
-                                    <input type="text" name="username" placeholder="Username..." >
-                                </div>
-            
-                                <div class="input-group mb-2">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-key"></i>Contraseña:</span>
-                                    </div>
-            
-                                        <input type="password" name="password" placeholder="Password..." class="form-control" >
-                                </div>
-            
-                                    <div class="d-flex justify-content-center mt-3 login_container">
-                                         <input class="btn" type="submit" value="Login">
-                                       </div>
-                            </form>
-                        </div>
-                            <div class="mt-4">
-                                <div class="d-flex justify-content-center links" >
-                                    No Tienes una cuenta? <a href="{% url 'main:registro' %}" class="ml-2">_Click aqui</a>
-                                </div>
-                        </div>
-                    </div>
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+  Iniciar Sesión
+{% endblock %}
+
+{% block content %}
+  <body>
+    <section>
+      <div class="innerPageBannerCol">
+        <div class="container">
+          <!-- centra el título -->
+          <div class="row g-4 g-md-3 align-items-center">
+            <div class="col-md-8">
+              <!-- le da un salto de línea al título si es largo -->
+              <div class="bannerContent">
+                <h1 class="xlTitle pb-md-3" style="font-size: 78px; font-family: Lovelyn;">Iniciar sesión</h1>
+                <div class="card mt-5">
+                  <div class="card-body">
+                    <form method="post">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label for="username">Nombre de usuario:</label>
+                        <input type="text" class="form-control" id="username" name="username" required />
+                      </div>
+                      <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" class="form-control" id="password" name="password" required />
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
+                    </form>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
         </div>
-    <style>
-        .card {
-            border-radius: 40px;
-            border: 2px solid #000000;
-          }
-          .btn{
-            padding: 10px 20px;
-            text-align: center;
-            display: inline-block;
-            color: #1df8b5;
-            border: 1px solid #1df8b5;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            transition: 0.3s ease-in-out;
-        } 
-        a {
-            color: #4285f4;
-            text-decoration: none;
-          }
-          
-          a:hover {
-            color: #000000;
-          }
-        .input-group-text {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffffff;
-  background-color:  #000000;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-}
-
-.input-group-text:hover {
-  background-color: #1df8b5;
-}
-
-          
-    </style>
-    </body>
-</html>
+      </div>
+    </section>
+  </body>
+{% endblock %}
